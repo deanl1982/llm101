@@ -144,8 +144,16 @@ if command -v swa &> /dev/null; then
     echo "✓ SWA CLI installed (version $SWA_VERSION)"
 else
     echo "✗ SWA CLI not found. Installing..."
-    npm install -g @azure/static-web-apps-cli
-    echo "✓ SWA CLI installed"
+
+    # Check if npm is installed
+    if command -v npm &> /dev/null; then
+        echo "  Installing @azure/static-web-apps-cli..."
+        npm install -g @azure/static-web-apps-cli
+        echo "✓ SWA CLI installed"
+    else
+        echo "✗ npm not found. Please install Node.js from: https://nodejs.org/"
+        exit 1
+    fi
 fi
 
 # Deploy website using SWA CLI

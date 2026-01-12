@@ -122,13 +122,31 @@ Write-Host "✓ Website files prepared" -ForegroundColor Green
 # Check if SWA CLI is installed
 Write-Host ""
 Write-Host "Checking for Azure Static Web Apps CLI..." -ForegroundColor Yellow
+$swaInstalled = $false
 try {
-    $swaVersion = swa --version 2>$null
-    Write-Host "✓ SWA CLI installed (version $swaVersion)" -ForegroundColor Green
+    $swaCheck = Get-Command swa -ErrorAction SilentlyContinue
+    if ($swaCheck) {
+        $swaVersion = & swa --version 2>$null
+        Write-Host "✓ SWA CLI installed (version $swaVersion)" -ForegroundColor Green
+        $swaInstalled = $true
+    }
 } catch {
+    # SWA not found
+}
+
+if (-not $swaInstalled) {
     Write-Host "✗ SWA CLI not found. Installing..." -ForegroundColor Yellow
-    npm install -g @azure/static-web-apps-cli
-    Write-Host "✓ SWA CLI installed" -ForegroundColor Green
+
+    # Check if npm is installed
+    try {
+        $null = Get-Command npm -ErrorAction Stop
+        Write-Host "  Installing @azure/static-web-apps-cli..." -ForegroundColor Gray
+        npm install -g @azure/static-web-apps-cli
+        Write-Host "✓ SWA CLI installed" -ForegroundColor Green
+    } catch {
+        Write-Host "✗ npm not found. Please install Node.js from: https://nodejs.org/" -ForegroundColor Red
+        exit 1
+    }
 }
 
 # Deploy website using SWA CLI
