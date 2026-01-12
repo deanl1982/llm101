@@ -141,8 +141,19 @@ if (-not $swaInstalled) {
     try {
         $null = Get-Command npm -ErrorAction Stop
         Write-Host "  Installing @azure/static-web-apps-cli..." -ForegroundColor Gray
-        npm install -g @azure/static-web-apps-cli
-        Write-Host "✓ SWA CLI installed" -ForegroundColor Green
+
+        # Try to install globally first
+        $null = npm install -g @azure/static-web-apps-cli 2>&1
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "✓ SWA CLI installed globally" -ForegroundColor Green
+        } else {
+            # If global install fails, install locally to the project
+            Write-Host "  Global install failed, installing locally..." -ForegroundColor Gray
+            npm install @azure/static-web-apps-cli
+            # Add local node_modules to PATH for this session
+            $env:PATH = "$PWD\node_modules\.bin;$env:PATH"
+            Write-Host "✓ SWA CLI installed locally" -ForegroundColor Green
+        }
     } catch {
         Write-Host "✗ npm not found. Please install Node.js from: https://nodejs.org/" -ForegroundColor Red
         exit 1

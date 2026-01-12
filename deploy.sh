@@ -148,8 +148,20 @@ else
     # Check if npm is installed
     if command -v npm &> /dev/null; then
         echo "  Installing @azure/static-web-apps-cli..."
-        npm install -g @azure/static-web-apps-cli
-        echo "✓ SWA CLI installed"
+
+        # Try to install globally, if that fails due to permissions, try with sudo
+        if npm install -g @azure/static-web-apps-cli 2>/dev/null; then
+            echo "✓ SWA CLI installed globally"
+        elif sudo npm install -g @azure/static-web-apps-cli 2>/dev/null; then
+            echo "✓ SWA CLI installed globally (with sudo)"
+        else
+            # If both fail, install locally to the project
+            echo "  Global install failed, installing locally..."
+            npm install @azure/static-web-apps-cli
+            # Add local node_modules to PATH for this session
+            export PATH="$PWD/node_modules/.bin:$PATH"
+            echo "✓ SWA CLI installed locally"
+        fi
     else
         echo "✗ npm not found. Please install Node.js from: https://nodejs.org/"
         exit 1
