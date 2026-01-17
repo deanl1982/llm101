@@ -1,18 +1,60 @@
-# LLM 101 - AI Terms Bingo Game
+# AI-101: Understanding Large Language Models
 
-An interactive web-based bingo game for teaching AI terminology in meetings and presentations. Participants click AI terms as they're mentioned during your talk, creating an engaging learning experience.
+A comprehensive introduction to how LLMs actually work - from the history of AI to the transformer architecture that powers modern models like ChatGPT, Claude, and Gemini.
 
-## Project Overview
+## Overview
 
-This project provides a simple, interactive bingo game where meeting participants can:
-- Enter their name to personalize the experience
-- Play bingo with 12 common AI terms
-- Click terms as they hear them during the presentation
-- Celebrate with confetti and animations when they complete all terms
+Before we automate our workflows with AI agents, it's critical to understand what's under the hood. This talk provides a technical foundation for understanding Large Language Models (LLMs) - how they're built, how they learn, and crucially, what their limitations are.
 
-### AI Terms Included
+## What's in This Repository
 
-The game features 12 essential AI/ML terms:
+This repository contains materials and interactive demos for a community talk on Large Language Models:
+
+### Presentation Materials
+- **[llm101.pptx](llm101.pptx)** - Main presentation slides covering LLM fundamentals
+
+### Interactive Demos
+- **[bingo.html](bingo.html)** - Interactive AI terminology bingo game for audience engagement
+  - Features 12 essential AI/ML terms (Machine Learning, Neural Network, Transformer, etc.)
+  - Participants click terms as they're mentioned during the talk
+  - Celebratory confetti animation when complete
+  - Works locally (just open in browser) or can be deployed to Azure
+
+### Code Examples
+- **[weights-lakes.py](weights-lakes.py)** - Weight calculation examples for neural networks
+- **[weights-csotm-before-after.py](weights-csotm-before-after.py)** - Before/after weight comparison examples
+- **[sample-frankenstein.txt](sample-frankenstein.txt)** - Sample text for NLP/tokenization demonstrations
+
+### Visual Assets
+- **[whey-ai-man-banner-middle.png](whey-ai-man-banner-middle.png)** - Banner graphic for the presentation
+
+## Quick Start
+
+### Using the Bingo Game
+
+Simply double-click [bingo.html](bingo.html) to open it in your browser - no setup required! Share it with your audience during the presentation.
+
+### Running Code Examples
+
+The Python scripts demonstrate neural network weight calculations:
+
+```bash
+python weights-lakes.py
+python weights-csotm-before-after.py
+```
+
+## Talk Topics Covered
+
+- History of AI and machine learning
+- How neural networks learn (weights, training, backpropagation)
+- The transformer architecture revolution
+- Tokenization and embeddings
+- Prompt engineering fundamentals
+- LLM limitations and challenges
+- Practical applications and use cases
+
+## AI Terms Featured in Bingo Game
+
 - Machine Learning
 - Neural Network
 - Deep Learning
@@ -26,145 +68,10 @@ The game features 12 essential AI/ML terms:
 - Generative AI
 - Embeddings
 
-## Files in This Repository
-
-### Core Game Files
-- **[bingo.html](bingo.html)** - Self-contained bingo game (HTML/CSS/JavaScript)
-- **[talk-notes.md](talk-notes.md)** - Your presentation notes
-
-### Deployment Options
-
-#### Manual Deployment
-- **[BINGO_DEPLOYMENT.md](BINGO_DEPLOYMENT.md)** - Manual deployment guide for Azure Portal, CLI, and GitHub
-
-#### Automated Terraform Deployment
-- **[TERRAFORM_DEPLOYMENT.md](TERRAFORM_DEPLOYMENT.md)** - Complete automated deployment guide
-- **[terraform/](terraform/)** - Terraform infrastructure as code
-  - [main.tf](terraform/main.tf) - Azure resource definitions
-  - [variables.tf](terraform/variables.tf) - Configuration variables
-  - [outputs.tf](terraform/outputs.tf) - Deployment outputs (URLs, tokens)
-- **[deploy.ps1](deploy.ps1)** - One-command PowerShell deployment script (Windows)
-- **[deploy.sh](deploy.sh)** - One-command Bash deployment script (Linux/Mac)
-
-### Python Scripts
-- **[weights.py](weights.py)** - Weight calculation utilities
-- **[weight-complex.py](weight-complex.py)** - Complex weight calculations
-
-## Quick Start
-
-### Option 1: Test Locally (No Deployment Needed)
-
-Simply double-click [bingo.html](bingo.html) to open it in your browser. Perfect for testing before deployment!
-
-### Option 2: Deploy to Azure (Automated)
-
-Deploy the complete infrastructure and website with a single command:
-
-**Windows:**
-```powershell
-.\deploy.ps1
-```
-
-**Linux/Mac:**
-```bash
-chmod +x deploy.sh
-./deploy.sh
-```
-
-The script will:
-1. Create Azure Resource Group
-2. Create Azure Static Web App (Free tier)
-3. Deploy the bingo game
-4. Provide you with the live URL
-
-### Prerequisites for Deployment
-
-- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-- [Terraform](https://www.terraform.io/downloads) (>= 1.0)
-- [Node.js/npm](https://nodejs.org/) (for SWA CLI)
-- Active Azure subscription
-
-## Architecture
-
-**Frontend:** Single-page vanilla JavaScript application (no frameworks)
-**Hosting:** Azure Static Web Apps (Free tier)
-**Infrastructure:** Terraform-managed Azure resources
-**Cost:** $0/month (Free tier)
-
-## Deployment Details
-
-### What Gets Created in Azure
-
-- **Resource Group:** `rg-ai-bingo`
-- **Static Web App:** `ai-bingo-game`
-  - Global CDN distribution
-  - Automatic HTTPS
-  - Custom domain support
-  - 100GB bandwidth/month (Free tier)
-
-### Supported Azure Regions
-
-Azure Static Web Apps are available in:
-- `eastus2` (default)
-- `westus2`
-- `centralus`
-- `westeurope`
-- `eastasia`
-
-## Usage During Your Meeting
-
-1. Deploy the application before your meeting
-2. Share the URL with participants (consider creating a QR code)
-3. Ask participants to enter their name and open the bingo card
-4. As you mention AI terms during your presentation, participants click them
-5. First to complete all 12 terms gets a celebration!
-
-## Advanced Deployment Options
-
-### Redeploy Website Only
-```powershell
-# Windows
-.\deploy.ps1 -SkipTerraform
-
-# Linux/Mac
-./deploy.sh --skip-terraform
-```
-
-### Destroy All Resources
-```powershell
-# Windows
-.\deploy.ps1 -DestroyInfra
-
-# Linux/Mac
-./deploy.sh --destroy
-```
-
-### Custom Configuration
-Edit [terraform/variables.tf](terraform/variables.tf) to customize:
-- Resource group name
-- App name
-- Azure region
-- Environment tags
-
-## Documentation
-
-- **[TERRAFORM_DEPLOYMENT.md](TERRAFORM_DEPLOYMENT.md)** - Comprehensive deployment guide
-- **[BINGO_DEPLOYMENT.md](BINGO_DEPLOYMENT.md)** - Manual deployment options
-
-## Features
-
-- Responsive design (works on mobile, tablet, desktop)
-- Progress tracking with visual progress bar
-- Click to mark/unmark terms
-- Winner celebration with confetti animation
-- Victory sound effects
-- Clean, modern UI with gradient styling
-
 ## License
 
-This is an educational project for teaching AI concepts.
+Educational materials for community presentations on AI and LLMs.
 
 ## Contributing
 
-This is a personal project for LLM 101 presentations, but feel free to fork and customize for your own use!
-
+Feel free to fork and adapt these materials for your own LLM presentations!
